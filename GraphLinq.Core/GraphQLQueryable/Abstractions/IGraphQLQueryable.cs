@@ -2,5 +2,6 @@
 {
     public interface IGraphQLQueryable<out TEntity>
     {
+        public string BuildQuery();
     }
 }

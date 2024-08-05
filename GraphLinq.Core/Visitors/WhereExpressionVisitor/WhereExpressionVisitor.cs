@@ -2,8 +2,8 @@
 using GraphLinq.Core.Visitors.Abstractions;
 using System.Linq.Expressions;
 using System.Text;
-using GraphLinq.Core.Visitors.Handlers.Abstractions;
 using GraphLinq.Core.Visitors.Handlers.Models;
+using GraphLinq.Core.Visitors.Chain;
 
 namespace GraphLinq.Core.Visitors.WhereExpressionVisitor
 {
@@ -11,14 +11,11 @@ namespace GraphLinq.Core.Visitors.WhereExpressionVisitor
     {
         private readonly LambdaExpression _expression;
         private StringBuilder _sb = new();
-        private readonly IEnumerable<IMethodCallHandler> _methodCallHandlers;
 
         internal WhereExpressionVisitor(
-            LambdaExpression expression, 
-            IEnumerable<IMethodCallHandler> methodCallHandlers)
+            LambdaExpression expression)
         {
             _expression = expression;
-            _methodCallHandlers = methodCallHandlers;
         }
 
         public void Visit()
@@ -79,7 +76,7 @@ namespace GraphLinq.Core.Visitors.WhereExpressionVisitor
                 var hasValue = memberExpression.Member == memberExpression.Expression.Type.GetMember("HasValue")[0];
                 hasValue = !not ? hasValue : !hasValue;
                 var op = hasValue ? "neq" : "eq";
-                filter = (_, index, __) => index != 0; // Удаляем первый (HasValue)
+                filter = (_, index, __) => index != 0; // Delete the first one (HasValue)
 
                 AppendMemberNameWithCondition(memberExpression, $"{{ {op}: null }}", filter);
                 return;
@@ -97,23 +94,12 @@ namespace GraphLinq.Core.Visitors.WhereExpressionVisitor
 
         private void VisitMethodCallExpression(MethodCallExpression expression, bool not = false)
         {
-            var canHandle = false;
-            MethodCallHandlerResult handleResult = default!;
+            ExpressionVisitorChain visitorChain = new ExpressionVisitorChain();
 
-            MethodCallHandlerResult result = default!;
+            MethodCallHandlerResult handleResult = 
+                visitorChain.ExecuteAsync(expression);
 
-            foreach (var handler in _methodCallHandlers)
-            {
-                result = handler.TryHandle(expression);
-
-                if (result.CanHandle)
-                {
-                    canHandle = true;
-                    break;
-                }
-            }
-
-            if (!canHandle)
+            if (!handleResult.CanHandle)
             {
                 throw new NotImplementedException($"MethodCall {expression.Method.Name} is not implemented");
             }
@@ -133,8 +119,8 @@ namespace GraphLinq.Core.Visitors.WhereExpressionVisitor
             {
                 var internalVisitor = new WhereExpressionVisitor(handleResult.InternalExpression);
                 internalVisitor.Visit();
-                var internalCondition = internalVisitor.ToString(); // TODO: Придумать что-то, чтобы передавать sb
-                
+                var internalCondition = internalVisitor.ToString(); // TODO: Come up with something to pass sb
+
                 AppendMemberNameWithCondition(handleResult.MemberExpression, $"{{ {handleResult.GetOperator(not)}: {{ {internalCondition} }} }}");
                 return;
             }

@@ -1,5 +1,6 @@
 ﻿using GraphLinq.Core.GraphQLQueryable.Abstractions;
 using GraphLinq.Core.GraphQLQueryable.Utils;
+using GraphLinq.Core.Models.Constants;
 
 namespace GraphLinq.Extensions
 {
@@ -10,7 +11,7 @@ namespace GraphLinq.Extensions
         {
             return (IGraphQLQueryable<TEntity>)
                 GraphQLQueryableMethods.GetConfigureMethod(typeof(TEntity))
-                    .Invoke(source, new object?[] { QueryableConfigurationKeys.DisabledIgnoreAttributes, true })!;
+                    .Invoke(source, [QueryableConfigurationKeys.DisabledIgnoreAttributes, true])!;
         }
     }
 }

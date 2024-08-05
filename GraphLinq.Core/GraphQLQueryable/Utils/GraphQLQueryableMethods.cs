@@ -1,5 +1,4 @@
-﻿using GraphLinq.Core.GraphQLQueryable;
-using GraphLinq.Core.GraphQLQueryable.Internal;
+﻿using GraphLinq.Core.GraphQLQueryable.Internal;
 using System.Reflection;
 
 namespace GraphLinq.Core.GraphQLQueryable.Utils

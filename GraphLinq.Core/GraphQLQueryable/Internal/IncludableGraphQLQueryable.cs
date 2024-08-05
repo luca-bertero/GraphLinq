@@ -20,7 +20,7 @@ namespace GraphLinq.Core.GraphQLQueryable.Internal
             CurrentNode = currentNode;
         }
 
-        protected IIncludableGraphQLQueryable<TEntity, TOutProperty> ThenInclude<TOutProperty>(
+        public IIncludableGraphQLQueryable<TEntity, TOutProperty> ThenInclude<TOutProperty>(
             Expression<Func<TProperty, TOutProperty>> thenIncludeExpression)
         {
             var newIncludeNode = CurrentNode.Nodes.FirstOrDefault(x => x.RootExpression == thenIncludeExpression);

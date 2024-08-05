@@ -8,7 +8,7 @@ namespace GraphLinq.Core.GraphQLQueryable.Internal
         GraphQLQueryable<TEntity>,
         IOrderableGraphQLQueryable<TEntity, TProperty>
     {
-        private GraphQLQueryable<TEntity> Queryable { get; set; }
+        private readonly GraphQLQueryable<TEntity> Queryable;
 
         public OrderedGraphQLQueryable(
             GraphQLQueryable<TEntity> queryable)

@@ -13,28 +13,28 @@ namespace SmartGraphQLClient.Core
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static IServiceCollection AddSmartGraphQLClient(this IServiceCollection services)
-        {
+        //public static IServiceCollection AddSmartGraphQLClient(this IServiceCollection services)
+        //{
             
-            // Providers
-            services.TryAddTransient<IGraphQLBodyStringProvider, DefaultGraphQLBodyStringProvider>();
-            services.TryAddTransient<IGraphQLWhereStringProvider, DefaultGraphQLWhereStringProvider>();
-            services.TryAddTransient<IGraphQLOrderStringProvider, DefaultGraphQLOrderStringProvider>();
-            services.TryAddTransient<IGraphQLOffsetPaginationStringProvider, DefaultGraphQLOffsetPaginationStringProvider>();
-            services.TryAddTransient<IGraphQLFieldNameProvider, DefaultGraphQLFieldNameProvider>();
-            services.TryAddTransient<IGraphQLValueFormatProvider, DefaultGraphQLValueFormatProvider>();
+        //    // Providers
+        //    services.TryAddTransient<IGraphQLBodyStringProvider, DefaultGraphQLBodyStringProvider>();
+        //    services.TryAddTransient<IGraphQLWhereStringProvider, DefaultGraphQLWhereStringProvider>();
+        //    services.TryAddTransient<IGraphQLOrderStringProvider, DefaultGraphQLOrderStringProvider>();
+        //    services.TryAddTransient<IGraphQLOffsetPaginationStringProvider, DefaultGraphQLOffsetPaginationStringProvider>();
+        //    services.TryAddTransient<IGraphQLFieldNameProvider, DefaultGraphQLFieldNameProvider>();
+        //    services.TryAddTransient<IGraphQLValueFormatProvider, DefaultGraphQLValueFormatProvider>();
 
-            // MethodCallHandlers
-            services.AddTransient<IMethodCallHandler, AllMethodCallHandler>();
-            services.AddTransient<IMethodCallHandler, AnyMethodCallHandler>();
-            services.AddTransient<IMethodCallHandler, AnyMethodCallHandlerEmpty>();
-            services.AddTransient<IMethodCallHandler, ArrayContainsMethodCallHandler>();
-            services.AddTransient<IMethodCallHandler, ContainsMethodCallHandler>();
-            services.AddTransient<IMethodCallHandler, StringContainsMethodCallHandler>();
-            services.AddTransient<IMethodCallHandler, StringEndsWithMethodCallHandler>();
-            services.AddTransient<IMethodCallHandler, StringStartsWithMethodCallHandler>();
+        //    // MethodCallHandlers
+        //    services.AddTransient<IMethodCallHandler, AllMethodCallHandler>();
+        //    services.AddTransient<IMethodCallHandler, AnyMethodCallHandler>();
+        //    services.AddTransient<IMethodCallHandler, AnyMethodCallHandlerEmpty>();
+        //    services.AddTransient<IMethodCallHandler, ArrayContainsMethodCallHandler>();
+        //    services.AddTransient<IMethodCallHandler, ContainsMethodCallHandler>();
+        //    services.AddTransient<IMethodCallHandler, StringContainsMethodCallHandler>();
+        //    services.AddTransient<IMethodCallHandler, StringEndsWithMethodCallHandler>();
+        //    services.AddTransient<IMethodCallHandler, StringStartsWithMethodCallHandler>();
             
-            return services;
-        }
+        //    return services;
+        //}
     }
 }
